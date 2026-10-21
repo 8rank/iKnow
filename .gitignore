@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.DS_Store
+POSITION.md
+leakcheck.py
+todos.txt

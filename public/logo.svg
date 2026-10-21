@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="iKnow: a classic Macintosh with one eye on its screen, watching a red pawn">
+  <rect x="0.5" y="0.5" width="63" height="63" rx="14" fill="#1b1f27" stroke="#ffffff" stroke-opacity="0.14"/>
+  <!-- the Mac -->
+  <g fill="none" stroke="#eef1f5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="11" y="10" width="28" height="36" rx="3.5" stroke-width="2.5"/>
+    <rect x="15" y="14" width="20" height="17" rx="1.5" stroke-width="2" fill="#2c3442"/>
+    <path d="M25 38.5h9" stroke-width="2"/>
+  </g>
+  <rect x="14" y="48.5" width="22" height="4" rx="1.5" fill="#eef1f5"/>
+  <!-- the eye, looking at the pawn -->
+  <path d="M18 22.5Q25 16.3 32 22.5Q25 28.7 18 22.5Z" fill="#eef1f5"/>
+  <circle cx="27.2" cy="22.5" r="3.5" fill="#1b1f27"/>
+  <circle cx="28.4" cy="21.3" r="1" fill="#ffffff"/>
+  <!-- the pawn -->
+  <g fill="#e5484d">
+    <circle cx="46.5" cy="36.8" r="3.3"/>
+    <rect x="43" y="40.2" width="7" height="2.2" rx="1"/>
+    <path d="M44.4 42.4L43.2 48.8H49.8L48.6 42.4Z"/>
+    <rect x="41.5" y="48.8" width="10" height="3.7" rx="1.2"/>
+  </g>
+</svg>

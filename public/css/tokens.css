@@ -1,0 +1,184 @@
+/* tokens.css — the design system.
+ *
+ * Every colour on screen resolves to a role defined here. Charts are written
+ * against roles (--series-1, --status-critical) rather than raw hex, so the
+ * light/dark swap happens in one place.
+ *
+ * The categorical palette is validated: on the dark surface (#1a1a19) all eight
+ * slots clear the lightness band, the chroma floor, adjacent-pair CVD separation
+ * (worst ΔE 8.4), the normal-vision floor (worst ΔE 19.3) and 3:1 contrast.
+ * Slots are assigned in fixed order and never cycled — a ninth series folds into
+ * "other" instead of inventing a hue.
+ *
+ * Dark is the default here: this app is read in one sitting, at night, by
+ * someone looking at their own data. Light is fully supported, not an
+ * afterthought — both columns are selected, not flipped.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* surfaces */
+  --plane:          #f9f9f7;
+  --surface-1:      #fcfcfb;
+  --surface-2:      #f2f1ed;
+  --surface-sunken: #eeede8;
+
+  /* ink */
+  --text-primary:   #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted:     #898781;
+
+  /* chrome */
+  --grid:           #e1e0d9;
+  --axis:           #c3c2b7;
+  --border:         rgba(11, 11, 11, 0.10);
+  --border-strong:  rgba(11, 11, 11, 0.18);
+  --wash:           rgba(11, 11, 11, 0.04);
+
+  /* categorical — fixed order, never cycled */
+  --series-1: #2a78d6;  /* blue    */
+  --series-2: #eb6834;  /* orange  */
+  --series-3: #1baf7a;  /* aqua    */
+  --series-4: #eda100;  /* yellow  */
+  --series-5: #e87ba4;  /* magenta */
+  --series-6: #008300;  /* green   */
+  --series-7: #4a3aa7;  /* violet  */
+  --series-8: #e34948;  /* red     */
+
+  /* sequential — one hue, light→dark. Ordinal use starts at step 250. */
+  --seq-100: #cde2fb;
+  --seq-150: #b7d3f6;
+  --seq-200: #9ec5f4;
+  --seq-250: #86b6ef;
+  --seq-300: #6da7ec;
+  --seq-350: #5598e7;
+  --seq-400: #3987e5;
+  --seq-450: #2a78d6;
+  --seq-500: #256abf;
+  --seq-550: #1c5cab;
+  --seq-600: #184f95;
+  --seq-650: #104281;
+  --seq-700: #0d366b;
+
+  /* heat — the sequential ramp the heatmaps use: white → red, low to high.
+   *
+   * One hue. Its thirteen lightness steps are the blue ramp's own OKLab
+   * lightness values with the hue rotated to red, so the perceptual progression
+   * is the already-validated one and only the colour changed. Lightness is
+   * strictly decreasing 100 → 700; contrast against the light surface climbs
+   * 1.31 → 12.18 with the value, so magnitude tracks prominence there.
+   *
+   * The ramp is deliberately NOT redefined for dark. Reversing it on the dark
+   * surface would make magnitude track brightness there too, but it turns the
+   * high end pale pink and the chart stops reading as heat at all — which is
+   * the thing the ramp is for. Saturated red holds its own against a near-black
+   * surface well enough that the trade is worth it. The cost, stated: the
+   * deepest cells sit at 1.4–2.0:1 on dark, so the bottom two buckets separate
+   * less there than they do in light mode.
+   *
+   * It sits close to --status-critical on purpose. On this dashboard "more"
+   * does mean "more exposed", so the two reading as one family is honest; the
+   * status tokens stay reserved for callouts and pills, which carry a label and
+   * a border and are never cells. */
+  --heat-100: #fbd6d1;
+  --heat-150: #f9c0b9;
+  --heat-200: #f7aba2;
+  --heat-250: #f69388;
+  --heat-300: #f47a6e;
+  --heat-350: #f25d53;
+  --heat-400: #ee3835;
+  --heat-450: #d6312e;
+  --heat-500: #bf2b28;
+  --heat-550: #a82422;
+  --heat-600: #921e1c;
+  --heat-650: #7c1817;
+  --heat-700: #671211;
+
+  /* diverging — blue ↔ red across a neutral grey midpoint */
+  --div-neg: #2a78d6;
+  --div-mid: #f0efec;
+  --div-pos: #e34948;
+
+  /* status — reserved. Never reused as a series colour, never used without an
+   * icon and a label beside it. */
+  --status-good:     #0ca30c;
+  --status-warning:  #fab219;
+  --status-serious:  #ec835a;
+  --status-critical: #d03b3b;
+
+  /* a mark drawn on a filled control (the knob of a switch), in either theme */
+  --on-fill: #ffffff;
+
+  /* type */
+  --font: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  /* space + motion */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+
+    --plane:          #0d0d0d;
+    --surface-1:      #1a1a19;
+    --surface-2:      #222221;
+    --surface-sunken: #131312;
+
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+
+    --grid:           #2c2c2a;
+    --axis:           #383835;
+    --border:         rgba(255, 255, 255, 0.10);
+    --border-strong:  rgba(255, 255, 255, 0.18);
+    --wash:           rgba(255, 255, 255, 0.05);
+
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    --series-3: #199e70;
+    --series-4: #c98500;
+    --series-5: #d55181;
+    --series-6: #008300;
+    --series-7: #9085e9;
+    --series-8: #e66767;
+
+    --div-mid: #383835;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --plane:          #0d0d0d;
+  --surface-1:      #1a1a19;
+  --surface-2:      #222221;
+  --surface-sunken: #131312;
+
+  --text-primary:   #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted:     #898781;
+
+  --grid:           #2c2c2a;
+  --axis:           #383835;
+  --border:         rgba(255, 255, 255, 0.10);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+  --wash:           rgba(255, 255, 255, 0.05);
+
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+
+  --div-mid: #383835;
+}
