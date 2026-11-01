@@ -8,10 +8,7 @@
 
 macOS builds a knowledge graph about the person who uses it: who you know, how
 it decided those people are related to you, who you write to and how often,
-whose faces recur in your photos, where you will be next. The graph is part of
-the Apple Intelligence bundle: the IntelligencePlatform store that the rest of
-the system, Siri included, reads for personal context. It lives on disk under
-your login, and macOS ships no way to look at it. Check out the [write up](https://8rank.ai/game/apple-intelligence-personal-knowledge-graph).
+whose faces recur in your photos, where you might be next. Check out the [write up](https://8rank.ai/game/apple-intelligence-personal-knowledge-graph).
 
 Apple documents very little of this. The daemon that builds the graph gets a
 one-line man page, and there is no user-facing account of what it stores or
