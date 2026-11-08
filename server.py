@@ -51,6 +51,7 @@ import os
 import pkgutil
 import resource
 import secrets
+import signal
 import socket
 import sys
 import traceback
@@ -428,6 +429,16 @@ FDA = """
   permission is picked up at launch, not while running.
 """
 
+FDA_OFF = """
+  If you turned on Full Disk Access just to run this, you can turn it off now:
+
+      System Settings → Privacy & Security → Full Disk Access
+
+  Switch off the app you started this from. The permission covers everything
+  you run from that app, not only this server. Turn it back on the next time
+  you run iKnow.
+"""
+
 
 def preflight():
     """Fail fast and legibly if the stores are not readable."""
@@ -532,10 +543,27 @@ def main():
     # the one the reader actually needs. Flush it rather than let it sit in a
     # buffer until the process exits.
     sys.stdout.flush()
+    # `kill` sends SIGTERM, which would end the process without a word. Route it
+    # through the same exit as ctrl-c so both print the note below.
+    signal.signal(signal.SIGTERM, _stop)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n  stopped\n")
+        print("\n  stopped")
+        # An extracted copy needs no special permission, so there is nothing
+        # to switch off.
+        print(_cyan(FDA_OFF) if db.live() else "", flush=True)
+
+
+def _stop(signum, frame):
+    raise KeyboardInterrupt
+
+
+def _cyan(text):
+    """Colour for a terminal; plain when piped or when NO_COLOR is set."""
+    if os.environ.get("NO_COLOR") or not sys.stdout.isatty():
+        return text
+    return "\033[36m" + text + "\033[0m"
 
 
 if __name__ == "__main__":

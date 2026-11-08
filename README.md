@@ -100,6 +100,11 @@ a bare SQLite error.
 Full Disk Access is what lets the terminal read the files. It gives iKnow no
 way to change them; every handle is read-only.
 
+When you are done, switch it off again. The permission covers everything you
+run from that app, not only iKnow. Go back to **System Settings → Privacy &
+Security → Full Disk Access** and turn the app off; turn it back on the next
+time you run iKnow. The server reminds you when you stop it.
+
 ### Reading a copy instead
 
 ```sh

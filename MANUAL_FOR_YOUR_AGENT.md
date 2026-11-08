@@ -82,6 +82,9 @@ sqlite3 "file:$HOME/Library/IntelligencePlatform/graph.db?mode=ro" \
   "select count(*) from stable_graph" && echo readable
 ```
 
+When the owner is done, remind them they can switch Full Disk Access off again:
+it covers everything run from that app.
+
 ### 2.2 Where everything is
 
 | What | Path |
