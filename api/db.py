@@ -131,13 +131,29 @@ def _graph_path(name):
 
 
 def _photos_library():
-    """The Photos index, in the default library or whichever one is in ~/Pictures."""
+    """The Photos index, in the default library or whichever one is found.
+
+    A system library can live on an external disk, so `KG_PHOTOS` names one
+    explicitly, and mounted volumes are searched only when nothing local exists.
+    """
+    override = os.environ.get("KG_PHOTOS")
+    if override:
+        path = os.path.expanduser(override)
+        if os.path.isdir(path):
+            for nested in ("database/Photos.sqlite", "Photos.sqlite"):
+                candidate = os.path.join(path, nested)
+                if os.path.exists(candidate):
+                    return candidate
+        return path
     default = os.path.expanduser(LIVE_SOURCES["Photos.sqlite"])
     if os.path.exists(default):
         return default
-    found = sorted(glob.glob(
-        os.path.expanduser("~/Pictures/*.photoslibrary/database/Photos.sqlite")))
-    return found[0] if found else default
+    for pattern in ("~/Pictures/*.photoslibrary", "/Volumes/*/*.photoslibrary"):
+        found = sorted(glob.glob(
+            os.path.expanduser(pattern) + "/database/Photos.sqlite"))
+        if found:
+            return found[0]
+    return default
 
 
 def _source_path(name):
