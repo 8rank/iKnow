@@ -105,6 +105,21 @@ run from that app, not only iKnow. Go back to **System Settings → Privacy &
 Security → Full Disk Access** and turn the app off; turn it back on the next
 time you run iKnow. The server reminds you when you stop it.
 
+### A library on an external disk
+
+macOS can keep the Photos library on a mounted volume, and that is where iKnow
+reads it. A library in `~/Pictures` still wins; otherwise the first one found
+on another volume is used. To name a specific one — several mounted disks, or a
+library somewhere else entirely — set `KG_PHOTOS` to the `.photoslibrary`, its
+`database/` directory, or the `Photos.sqlite` file itself:
+
+```sh
+KG_PHOTOS="/Volumes/MyDisk/Photos Library.photoslibrary" python3 server.py
+```
+
+The previews the face pages use are looked for beside it, so one variable covers
+both stores.
+
 ### Reading a copy instead
 
 ```sh
